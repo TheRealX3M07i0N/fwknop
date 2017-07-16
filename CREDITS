@@ -1,0 +1,233 @@
+Jonathan Bennett
+    - Contributed OpenWRT support - see the extras/openwrt/ directory.
+    - Suggested the addition of the --key-gen option to fwknopd.
+    - Contributed the console-qr.sh script (in extras/console-qr/) to create
+      QR codes from fwknopd access.conf keys.
+    - Wrote a new fwknop client for Android called "Fwknop2" - see:
+        https://f-droid.org/repository/browse/?fdid=org.cipherdyne.fwknop2
+
+Sebastien Jeanquier
+    - Assisted with getting fwknop included in BackTrack Linux - the choice
+      distro for pentration testers.
+
+Ozmart
+    - Suggested the idea for setting an access stanza expiration time.
+    - Suggested the abiliy to have certain incoming connections automatically
+      NAT'd through to specific internal systems.  The result was the FORCE_NAT
+      mode.
+    - Assisted with getting fwknop running under the Pentoo Linux distro.
+
+Max Kastanas
+    - Contributed both an Android and an iPhone fwknop client port - see the
+      top level android/ and iphone/ directories.
+
+Ted Wynnychenko
+    - Helped test fwknop PF support on OpenBSD.
+
+Andy Rowland
+    - Reported a bug where the same encryption key used for two stanzas in the
+      access.conf file would result in access requests that matched the second
+      stanza to always be treated as a replay attack.  This has been fixed for
+      the fwknop-2.0.1 release.
+
+C Anthony Risinger
+    - Caught a bug where the default PCAP_LOOP_SLEEP value was 1/100th of a
+      second instead of the intended default of 1/10th of a second.
+
+Franck Joncourt
+    - fwknop Debian package maintainer.
+    - Contributed a new Debian init script.
+    - Contributed a patch to have the perl FKO module link against libfko in
+      the local directory (if it exists) so that it doesn't have to have libfko
+      completely installed in /usr/lib/.  This allows the test suite to run FKO
+      tests without installing libfko.
+    - Contributed a patch to remove unnecessary chmod() call when creating
+      client rc file and server replay cache file.  The permissions are now set
+      appropriately via open(), and at the same time this patch fixes a
+      potential race condition since the previous code used fopen() followed by
+      chmod().
+    - Contributed a patch to allow the fwknop client to be stopped with Ctrl-C
+      before sending an SPA packet on the wire.
+    - Contributed a patch to ensure that duplicate iptables rules are not
+      created even for different SPA packets that arrive at the same time and
+      request the same access.
+    - Added support for resolving hostnames in various NAT modes (fixes issue
+      #43 in github).
+    - Bug fix in the client for resolving hostnames in '-P icmp' mode (fixes
+      issue #64).
+    - Added support for saving fwknop client command line arguments via a new
+      option --save-rc-stanza.
+    - Added log module support for the client.
+    - Added the ability to read a passphrase from STDIN and also from a file
+      descriptor via --fd (closes #74).
+    - Added libfko unit tests via the CUnit framework.
+
+Jonathan Schulz
+    - Submitted patches to change HTTP connection type to 'close' for -R mode
+      in the client and fix a bug for recv() calls against returned HTTP data.
+
+Aldan Beaubien
+    - Reported an issue with the Morpheus client sending SPA packets with NULL
+      IP addresses, and code was added to fwknopd to better validate incoming
+      SPA data as a result of this report.
+
+Geoff Carstairs
+    - Suggested a way to redirect valid connection requests to a specific
+      internal service via NAT, configurable by each stanza in access.conf.
+      This allows for better access control for multple users requiring access
+      to multiple internal systems, in a manner that is transparent to the
+      user.  The result was the FORCE_NAT mode.
+
+Hank Leininger
+    - Contributed a patch to greatly extend libfko error code descriptions at
+      various places in order to give much better information on what certain
+      error conditions mean.  Closes #98.
+    - Suggested the ability to read a passphrase from STDIN and via a new --fd
+      command line argument (github #74) to allow things like:
+            $ gpg -d passphrasefile.pgp | fwknop -R -n myserver
+    - For iptables firewalls, suggested a check for the 'comment' match to
+      ensure the local environment will properly support fwknopd operations.
+      The result is the new ENABLE_IPT_COMMENT_CHECK functionality.
+
+Fernando Arnaboldi (IOActive)
+    - Found important buffer overflow conditions for authenticated SPA clients
+      in the fwknopd server (pre-2.0.3).  These findings enabled fixes to be
+      developed along with a new fuzzing capability in the test suite.
+    - Found a condition in which an overly long IP from malicious authenticated
+      clients is not properly validated by the fwknopd server (pre-2.0.3).
+    - Found a local buffer overflow in --last processing with a maliciously
+      constructed ~/.fwknop.run file.  This has been fixed with proper
+      validation of .fwknop.run arguments.
+    - Found several conditions in which the server did not properly throw out
+      maliciously constructed variables in the access.conf file.  This has been
+      fixed along with new fuzzing tests in the test suite.
+
+Vlad Glagolev
+    - Submitted a patch to fix ndbm/gdbm usage when --disable-file-cache is
+      used for the autoconf configure script.  This functionality was broken in
+      be4193d734850fe60f14a26b547525ea0b9ce1e9 through improper handling of
+      #define macros from --disable-file-cache.
+    - Submitted a patch to fix command exec mode under SPA message type
+      validity test.  Support for command exec mode was also added to the test
+      suite.
+    - Submitted an OpenBSD port for fwknop-2.0.3, and this has been checked in
+      under extras/openbsd/.
+    - Added client timeouts for open/close command cycles for fwknop-2.6.8.
+
+Sean Greven
+    - Created a port of fwknop for FreeBSD:
+      http://portsmon.freebsd.org/portoverview.py?category=security&portname=fwknop
+
+Michael T. Dean
+    - Reported the Rijndael key truncation issue for user-supplied keys
+      (passphrases) greater than 16 bytes long.
+
+George Herlin
+    - Proposed a verification approach to test suite operations, and the result
+      was implemented in a61939c005e2b09d6800e2171f607c9d1948f022.  This makes
+      test suite operate equivalently regardless of whether valgrind is used or
+      whether fwknop is being tested on an embedded system with very limited
+      resources.
+
+Ruhsam Bernhard
+    - Reported an issue where the message size test would result in long
+      command mode SPA packets not decrypting properly because only GPG decrypt
+      attempts were made.  This issue was fixed in
+      7e784df3870373f055a2f0f8d818829501bcb1c0.
+
+Shawn Wilson
+    - Added better SPA source IP logging for various fwknopd logging messages.
+      This helps to make it more clear why certain SPA packets are rejected
+      from some systems.
+
+Dan Lauber
+    - Suggested a check for fwknopd to ensure that the jump rule on systems
+      running iptables is not duplicated if it already exists.
+
+Ryman
+    - Reported a timing attack bug in the HMAC comparison operation (#85) and
+      suggested a fix derived from yaSSL:
+      http://www.mail-archive.com/debian-bugs-rc@lists.debian.org/msg320402.html
+
+Blair Zajac
+    - MacPorts fwknop package maintainer for Mac OS X systems.
+    - Contributed patches to handle endian issues on PPC systems.
+    - Reported an issue where strndup() is not available on some PPC systems
+      and the fix is to use the local lib/fko_util.c implementation similarly
+      to Windows builds.
+    - Suggested throwing an error in '-M legacy' mode to warn users about the
+      inability of older fwknopd daemons to handle Rijndael keys > 16 bytes.
+      Any release after and including 2.5 does not have this limitation.
+
+Radostan Riedel
+    - Contributed an AppArmor policy that is known to work on Debian and Ubuntu
+      systems.  The policy file is available in extras/apparmor.
+
+Les Aker
+    - Reported an issue with Arch Linux that resulted in fwknopd hanging for a
+      pcap_dispatch() packet count of zero when using libpcap-1.5.1.  This
+      issue was tracked on github as issue #110, and the default packet count
+      is now set at 100 as a result.
+
+Marek Wrzosek
+    - Suggested doc update to fwknop man pages to accurately describe the usage
+      of digits instead of bytes for SPA random data.  About 53 bits of entropy
+      are actually used, although this is in addition to the 64-bit random salt
+      in for key derivation used by PBKDF1 in Rjindael CBC mode.
+    - Various excellent feedback on crypto design, including the need to remove
+      the GPG_IGNORE_SIG_VERIFY_ERROR mode.
+
+Gerry Reno
+    - Updated the Android client to be compatible with Android-4.4.
+    - Provided guidance on Android client issues along with testing candidate
+      patches to update various things - this work is being tracked in the
+      android4.4_support branch.
+    - Implemented support for firewalld in the fwknopd daemon running on RHEL 7
+      and CentOS 7 systems. This is a major addition to handle yet another
+      firewall architecture.
+
+Tim Heckman
+    - Homebrew fwknop package maintainer for Mac OS X systems.
+    - Suggested that fwknop support nftables when it is integrated into the
+      mainline Linux kernel.
+
+Barry Allard
+    - Reported bug in PF support on FreeBSD systems where ALTQ is not available
+      would cause new PF rules to not be added (github issue #121).
+    - Suggested the abiliy to specify the HTTP User-Agent when wget is used to
+      resolve the external IP via SSL (github issue #134).
+
+Bill Stubbs
+    - Submitted a patch to fix a bug where fwknopd could not handle Ethernet
+      frames that include the Frame Check Sequence (FCS) header. This header is
+      four bytes long, and is placed at the end of each Ethernet frame.
+      Normally the FCS header is not visible to libpcap, but some card/driver
+      combinations result in it being included. Bill noticed this on the
+      following platform:
+          BeagleBone Black rev C running 3.8.13-bone50 #1 SMP Tue May 13
+          13:24:52 UTC 2014 armv7l GNU/Linux
+
+Grant Pannell
+    - Submitted a patch to add a new access.conf variable "DESTINATION" in
+      order to define the destination address for which an SPA packet will be
+      accepted. The string "ANY" is also accepted if a valid SPA packet should
+      be honored to any destination IP. Similarly to the "SOURCE" variable,
+      networks should be specified in CIDR notation (e.g. "192.168.10.0/24"),
+      and individual IP addresses can be specified as well. Also, multiple IP's
+      and/or networks can be defined as a comma separated list (e.g.
+      "192.168.10.0/24,10.1.1.123").
+
+Alexander Kozhevnikov
+    - Reported a bug when fwknop is compiled with --enable-udp-server where
+      the server was including pcap.h
+
+Dan Brooks
+    - Contributed a patch for the Android client app to add the definition of
+      custom server udp port. This is similiar to the --server-port argument
+      offered by the main fwknop client.
+
+Github user 'sgh7':
+    - Contributed a patch to have fwknopd exit if the interface it is sniffing
+      on goes down. If this happens, it is expected that the native process
+      monitoring feature in things like systemd or upstart will restart
+      fwknopd.

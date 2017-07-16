@@ -1,0 +1,13 @@
+[default]
+
+[sdp_ctrl_gate]
+SDP_ID                      222
+ALLOW_IP                    10.11.12.2 
+SERVICE_IDS                 1
+#ACCESS                      tcp/5000
+SPA_SERVER                  127.0.0.1
+KEY_BASE64                  z8ngq6MaidxxStiUHk0CECm0CBSuYUvyD8zb99oliV4=
+HMAC_KEY_BASE64             60stItDmZeQNWz8ODvz1fdchhYp3h+finZieSO6vKUdSSUkPyglKVv9heFc23Yh7vbRp+jvX2eIN+rAa8QJBAOJ7GALaqWPbE/DUu+UIzLbJvNzvCPLj+iUe/td+ot6jVNGOMrIitsEt1r9gf66eGq6WZJ6lY60USIndz0NrdMA=
+USE_HMAC                    Y
+
+

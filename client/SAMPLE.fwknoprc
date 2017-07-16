@@ -1,0 +1,22 @@
+[default]
+
+[sdp_ctrl_gate]
+SDP_ID                      333
+ALLOW_IP                    192.168.1.9 
+SERVICE_IDS                 1
+SPA_SERVER                  192.168.1.99
+KEY_BASE64                  bDIge4dZ4X6ssMODIKSgCxjKoxlByPjsw+/FKpWD7Wk=
+HMAC_KEY_BASE64             plY3QcM5tLlwTQOAopHQs3XpEKnE1sbLOfsvHNycNMbJEtYvh7AXV8bNtbdpvDfhV3aAGurP8Er0epPVMw6IHQ==
+USE_HMAC                    Y
+
+
+[service_gate]
+SDP_ID                      333
+ALLOW_IP                    192.168.1.9 
+SERVICE_IDS                 2,3,4
+SPA_SERVER                  192.168.1.99
+KEY_BASE64                  bDIge4dZ4X6ssMODIKSgCxjKoxlByPjsw+/FKpWD7Wk=
+HMAC_KEY_BASE64             plY3QcM5tLlwTQOAopHQs3XpEKnE1sbLOfsvHNycNMbJEtYvh7AXV8bNtbdpvDfhV3aAGurP8Er0epPVMw6IHQ==
+USE_HMAC                    Y
+SDP_CTRL_CLIENT_CONF        /path/to/SAMPLE_sdp_ctrl_client.conf
+

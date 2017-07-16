@@ -1,0 +1,4 @@
+[default]
+HMAC_DIGEST_TYPE    sha256
+KEY                 rijndaeltest
+HMAC_KEY            hmactest

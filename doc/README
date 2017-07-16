@@ -1,0 +1,40 @@
+NOTES on the generation of the fwknop man pages:
+
+Until we decide on a better way, the man pages for 'fwknop' (client) and
+'fwknopd' (server) are generated from the asciidoc sources in this directory,
+then copied to their respective directories before check-in.
+
+We use the "a2x" command to generate the inital nroff-formated version,
+which is then manually edited to clean it up a bit.  The "a2x" command is:
+
+    a2x -f manpage  fwknopd.man.asciidoc
+
+This creates the "fwknopd.8" man page.  However, depending on the a2x and.or
+asciidoc configuration on your system, you may have to edit the "fwknopd.8"
+file directly to remove the "[FIXME: source/manual]" string embedded within.
+At present, we simply remove them.  There may also be places where you want
+items on succesive line without intervening lines (i.e. the AUTHORS section
+of the generated man page).  In those cases, simply change the ".sp"
+between those lines to ".br".
+
+Generating HTML versions of the documentation:
+
+Here are some of the commands used to create/generate HTML versions of
+the fwknop documentation.
+
+For the libfko API doc, you could just do a "make html" to create a
+libfki.html directory with a reasonable set of HTML pages.  You can also
+use "texi2html" which give a bit more flexibility.  For example:
+
+    texi2html --noheader --nomenu --toc-links libfko.texi
+
+Will generate a single HTML document. With this, the table of contents is
+put at the end of the document, but it is not hard to edit the file and to
+relocate it to the top.
+
+For creating HTML versions of the man pages, simply use the "-f xhtml"
+option to the "a2x" command:
+
+    a2x -f xhtml fwknopd.man.asciidoc
+
+

@@ -1,0 +1,24 @@
+[default]
+
+[sdp_ctrl_gate]
+SDP_ID                      333
+ALLOW_IP                    127.0.0.1
+SERVICE_IDS                 1
+#ACCESS                      tcp/5000
+SPA_SERVER                  127.0.0.1
+KEY_BASE64                  Xpee90NZMvAyKJ5fxQIRALNdETK8w3pTR60NJBJy5Bw=
+HMAC_KEY_BASE64             PRxnFcl+rUFpg2R6sHyuAiCs0imvVP1wn0Qweqokd9XZweOwmRABWtpxehbahY7QuMKhbE690ln5E6VtqQJBAIOEtHE+oqFe5kPL3oUGP+y+YvIFcr/iWYhmRJ+HHBRjiToNQIUO7n2xPehBlOseFYRT27XK0Cyn6BtHBCM21Wc=
+USE_HMAC                    Y
+
+
+[service_gate]
+SDP_ID                      333
+ALLOW_IP                    127.0.0.1 
+SERVICE_IDS                 4
+#ACCESS                      tcp/80
+SPA_SERVER                  127.0.0.1
+KEY_BASE64                  Xpee90NZMvAyKJ5fxQIRALNdETK8w3pTR60NJBJy5Bw=
+HMAC_KEY_BASE64             PRxnFcl+rUFpg2R6sHyuAiCs0imvVP1wn0Qweqokd9XZweOwmRABWtpxehbahY7QuMKhbE690ln5E6VtqQJBAIOEtHE+oqFe5kPL3oUGP+y+YvIFcr/iWYhmRJ+HHBRjiToNQIUO7n2xPehBlOseFYRT27XK0Cyn6BtHBCM21Wc=
+USE_HMAC                    Y
+SDP_CTRL_CLIENT_CONF        sdptmp/client_sdp_ctrl_client.conf
+

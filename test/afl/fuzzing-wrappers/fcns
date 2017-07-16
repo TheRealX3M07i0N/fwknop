@@ -1,0 +1,36 @@
+
+TOP_DIR="fuzzing-output"
+ARCHIVE_DIR="$TOP_DIR/archive"
+SERVER="../../server/.libs/fwknopd"
+CLIENT="../../client/.libs/fwknop"
+LIB_DIR="../../lib/.libs"
+
+MEM_LIMIT=800
+TIMEOUT=1000
+
+fw_type() {
+    ### default to iptables
+    FW="/iptables"
+    LD_LIBRARY_PATH=$LIB_DIR $SERVER --version | grep "firewall-cmd"
+    if [ "$?" = "0" ]
+    then
+        FW="/firewalld"
+    fi
+    eval "$2=$1$FW"
+}
+
+git_banner() {
+    if [ -d '../../.git' ] && [ `which git` ]
+    then
+        C=`git log --abbrev-commit | head -n 1 | awk '{print $2}'`
+        eval "$1=,$C"
+    fi
+}
+
+dir_init() {
+    [ ! -d $1 ] && mkdir -p $1
+    TS=`date +"%m%d%y%H%M%S"`
+    eval "$4=$1/$2-$TS"
+    [ -d $3 ] && mv $3 "$1/$2-$TS"
+    mkdir $3
+}
